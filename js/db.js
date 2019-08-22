@@ -1,29 +1,23 @@
-var MongoClient = require('mongodb').MongoClient
+const mongoose = require('mongoose')
 
-var state = {
-    db: null,
-}
+var db = mongoose.connection;
 
-exports.connect = function (done) {
-    if (state.db) return done()
+mongoose.connect('mongodb://134.209.152.214:27017/site', { useNewUrlParser: true })
 
-    MongoClient.connect('mongodb://134.209.152.214:27017/site', function (err, client) {
-        if (err) return done(err)
-        state.db = client.db('site')
-        done()
-    })
-}
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    console.log('we are connected!')
+})
 
-exports.get = function () {
-    return state.db
-}
+var Schema = mongoose.Schema
 
-exports.close = function (done) {
-    if (state.db) {
-        state.db.close(function (err, result) {
-            state.db = null
-            state.mode = null
-            done(err)
-        })
-    }
-}
+var article = new Schema({
+    title: String,
+    tags: Array,
+    content: String,
+    date: Date,
+})
+
+var Blog = mongoose.model('articles', article)
+
+exports.article = Blog
