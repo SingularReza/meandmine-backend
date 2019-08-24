@@ -16,7 +16,7 @@ var article = new Schema({
     subtext: String,
     pretext: String,
     tags: Array,
-    content: Array,
+    content: String,
     date: Date,
 })
 
