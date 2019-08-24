@@ -13,6 +13,7 @@ app.use('/', express.static(path.join(__dirname, 'dist')))
 //app.use(express.static(path.join(__dirname, '/dist')))
 app.use(history())
 
-//app.get('/', (req, res) => res.sendFile('index.html'));
+app.get('/', (req, res) => res.send('backend'))
+app.get('/blog/"id', (req, res) => res.send('blog data'))
 
 app.listen(port, () => console.log(`site running on port ${port}!`));
