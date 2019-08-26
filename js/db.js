@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 var db = mongoose.connection;
 
-mongoose.connect('mongodb://134.209.152.214:27017/site', { useNewUrlParser: true })
+mongoose.connect('mongodb://134.209.152.214:27017/mysite', { useNewUrlParser: true })
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {

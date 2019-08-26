@@ -1,4 +1,4 @@
-var Article = require('../db/db.js').blog
+var Article = require('./db.js').blog
 
 exports.create = function(article, done) {
     var newArticle = new Article(article)
