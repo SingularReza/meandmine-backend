@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const ObjectID = require('mongodb').ObjectID
+
 
 var db = mongoose.connection;
 
@@ -12,6 +14,7 @@ db.once('open', function () {
 var Schema = mongoose.Schema
 
 var article = new Schema({
+    //_id: new ObjectID(),
     title: String,
     titleImage: String,
     subtext: String,
@@ -22,6 +25,6 @@ var article = new Schema({
     date: Date,
 })
 
-var Blog = mongoose.model('articles', article)
+var Article = mongoose.model('articles', article)
 
-exports.article = Blog
+exports.article = Article

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-var article = require('./js/article.js');
+const article = require('./js/article.js');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const history = require('connect-history-api-fallback');
@@ -28,15 +28,30 @@ app.use('/', express.static(path.join(__dirname, 'dist')))
 app.use(history())
 
 app.get('/', (req, res) => res.send('backend'))
-app.get('/blog/:id', (req, res) => res.send('blog data'))
+app.get('/article/:id', (req, res) => {
+    article.findArticle(req.params.id, function(content) {
+        res.send(content)
+    })
+})
 
-app.post('/article/create/:id', (req, res) => {
+app.post('/article/create', (req, res) => {
     upload(req, res, function(err) {
         if (err) throw err;
         else {
             console.log('file successfully uploaded')
-            console.log(req.body, req.files)
-            res.send('done')
+            //console.log(req.body, req.files)
+            var temp = req.body
+            temp.titleImage = req.files[0].path
+            temp.images = []
+            Array.from(req.files).forEach(file => {
+                if(file.fieldname === 'images') {
+                    temp.images.push(file.path)
+                }
+            })
+            temp.tags = JSON.parse(temp.tags)
+            article.create(temp, function(saved) {
+                res.send(saved)
+            })
         }
     })
 })
