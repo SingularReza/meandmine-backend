@@ -13,10 +13,12 @@ var Schema = mongoose.Schema
 
 var article = new Schema({
     title: String,
+    titleImage: String,
     subtext: String,
     pretext: String,
     tags: Array,
     content: String,
+    images: Array,
     date: Date,
 })
 
