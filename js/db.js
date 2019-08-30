@@ -25,6 +25,12 @@ var article = new Schema({
     date: Date,
 })
 
+var stubbedArticle = newSchema({
+    _id: String,
+    title: String,
+})
+
 var Article = mongoose.model('articles', article)
 
 exports.article = Article
+exports.stubbed = stubbedArticle

@@ -1,4 +1,5 @@
 var Article = require('./db.js').article
+var StubbedArticle = require('./db.js').stubbed
 
 exports.create = function(article, done) {
     var newArticle = new Article(article)
@@ -22,4 +23,15 @@ exports.findArticle = function(articleID, done) {
             }
         }
     )
+}
+
+exports.getArticleList = function(done) {
+    stubbedArticle.find({}, function (err, found) {
+        if(err) throw err
+        if (found) {
+            done(found)
+        } else {
+            done(404)
+        }
+    })
 }
