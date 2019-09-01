@@ -5,7 +5,7 @@ const article = require('./js/article.js');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const history = require('connect-history-api-fallback');
-const port = 3000;
+const port = 3300;
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -31,6 +31,7 @@ app.use(history())
 //app.get('/', (req, res) => res.send('backend'))
 //app.get('/images/:path', (res, req) => res.send())
 app.get('/article/:id', (req, res) => {
+    console.log('here')
     article.findArticle(req.params.id, function(content) {
         res.send(content)
     })
@@ -55,6 +56,12 @@ app.post('/article/create', (req, res) => {
                 res.send(saved)
             })
         }
+    })
+})
+
+app.get('/blog/list', (req, res) => {
+    article.getArticleList(function(list) {
+        res.send(list)
     })
 })
 

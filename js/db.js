@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const ObjectID = require('mongodb').ObjectID
+//const ObjectID = require('mongodb').ObjectID
 
 
 var db = mongoose.connection;
@@ -14,7 +14,6 @@ db.once('open', function () {
 var Schema = mongoose.Schema
 
 var article = new Schema({
-    //_id: new ObjectID(),
     title: String,
     titleImage: String,
     subtext: String,
@@ -25,12 +24,12 @@ var article = new Schema({
     date: Date,
 })
 
-var stubbedArticle = newSchema({
-    _id: String,
+var stubbedArticle = new Schema({
     title: String,
 })
 
-var Article = mongoose.model('articles', article)
+var Article = mongoose.model('article', article, 'articles')
+var Stubbed = mongoose.model('list', stubbedArticle, 'articles')
 
 exports.article = Article
-exports.stubbed = stubbedArticle
+exports.stubbed = Stubbed

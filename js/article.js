@@ -26,7 +26,7 @@ exports.findArticle = function(articleID, done) {
 }
 
 exports.getArticleList = function(done) {
-    stubbedArticle.find({}, function (err, found) {
+    StubbedArticle.find({}, function (err, found) {
         if(err) throw err
         if (found) {
             done(found)
