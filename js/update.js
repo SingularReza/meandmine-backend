@@ -9,3 +9,16 @@ exports.create = function (update, done) {
         done(value)
     })
 }
+
+exports.getLatestUpdates = function (done) {
+    Update.find({})
+      .sort({ createdAt: -1 })
+        .limit(4).exec(function (err, found) {
+            if (err) throw err
+            if (found) {
+                done(found)
+            } else {
+                done(404)
+            }
+        })
+}

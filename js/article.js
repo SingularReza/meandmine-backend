@@ -35,3 +35,16 @@ exports.getArticleList = function(done) {
             }
         })
 }
+
+exports.getLatestArticles = function(done) {
+    Article.find({})
+      .sort({createdAt: -1})
+        .limit(4).exec(function(err, found) {
+            if (err) throw err
+            if (found) {
+                done(found)
+            } else {
+                done(404)
+            }
+        })
+}
