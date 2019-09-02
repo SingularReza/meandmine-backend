@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const article = require('./js/article.js');
+const update = require('./js/update.js');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const history = require('connect-history-api-fallback');
@@ -26,14 +27,19 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //app.use('/', express.static(path.join(__dirname, 'dist')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
 //app.use(express.static(path.join(__dirname, '/dist')))
-app.use(history())
+app.use(history({index: 'dist/default.html'}))
 
 //app.get('/', (req, res) => res.send('backend'))
 //app.get('/images/:path', (res, req) => res.send())
 app.get('/article/:id', (req, res) => {
-    console.log('here')
     article.findArticle(req.params.id, function(content) {
         res.send(content)
+    })
+})
+
+app.post('/update/create', (req, res) => {
+    update.create(req.body, function(returned) {
+        res.send(returned)
     })
 })
 

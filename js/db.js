@@ -24,12 +24,16 @@ var article = new Schema({
     date: Date,
 })
 
-var stubbedArticle = new Schema({
+
+var update = new Schema({
     title: String,
+    text: String,
+    date: Date,
+    image: String
 })
 
 var Article = mongoose.model('article', article, 'articles')
-var Stubbed = mongoose.model('list', stubbedArticle, 'articles')
+var Update = mongoose.model('updates', update)
 
 exports.article = Article
-exports.stubbed = Stubbed
+exports.update = Update
