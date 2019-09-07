@@ -24,13 +24,16 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-//app.use('/', express.static(path.join(__dirname, 'dist')))
+app.use('/', express.static(path.join(__dirname, 'dist')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
-//app.use(express.static(path.join(__dirname, '/dist')))
 app.use(history({index: 'dist/default.html'}))
+/*app.use(redirectUnmatched)
 
-//app.get('/', (req, res) => res.send('backend'))
-//app.get('/images/:path', (res, req) => res.send())
+function redirectUnmatched(req, res) {
+    res.redirect("http://www.mysite.com/");
+}
+*/
+
 app.get('/article/:id', (req, res) => {
     article.findArticle(req.params.id, function(content) {
         res.send(content)
@@ -48,7 +51,6 @@ app.post('/article/create', (req, res) => {
         if (err) throw err;
         else {
             console.log('file successfully uploaded')
-            //console.log(req.body, req.files)
             var temp = req.body
             temp.titleImage = req.files[0].path
             temp.images = []
@@ -70,5 +72,10 @@ app.get('/blog/list', (req, res) => {
         res.send(list)
     })
 })
+
+/*app.all('*', function(req, res) {
+  res.redirect("http://www.mysite.com/");
+});
+*/
 
 app.listen(port, () => console.log(`site running on port ${port}!`));
