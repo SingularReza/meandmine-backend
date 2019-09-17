@@ -30,6 +30,11 @@ var update = new Schema({
     image: String
 })
 
+var resource = new Schema({
+    title: String,
+    link: String
+})
+
 var Article = mongoose.model('article', article, 'articles')
 var Update = mongoose.model('updates', update)
 
