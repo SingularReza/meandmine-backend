@@ -36,7 +36,7 @@ exports.getArticleList = function(done) {
         })
 }
 
-exports.getLatestArticles = function(done) {
+exports.findLatest = function(done) {
     Article.find({})
       .sort({createdAt: -1})
         .limit(4).exec(function(err, found) {

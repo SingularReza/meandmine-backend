@@ -24,15 +24,15 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use('/', express.static(path.join(__dirname, 'dist')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
-app.use(history({index: 'dist/default.html'}))
-/*app.use(redirectUnmatched)
 
-function redirectUnmatched(req, res) {
-    res.redirect("http://www.mysite.com/");
-}
-*/
+app.use(history())
+
+// Should find out why i have to decalre the middleware the 2nd time
+app.use('/', express.static(path.join(__dirname, 'dist')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
 
 app.get('/article/:id', (req, res) => {
     article.findArticle(req.params.id, function(content) {
@@ -41,8 +41,27 @@ app.get('/article/:id', (req, res) => {
 })
 
 app.post('/update/create', (req, res) => {
-    update.create(req.body, function(returned) {
-        res.send(returned)
+    upload(req, res, function(err) {
+        if (err) throw err;
+        else {
+            var temp = req.body
+            temp.image = req.files[0].path
+            update.create(temp, function (returned) {
+                res.send(returned)
+            })
+        }
+    })
+})
+
+app.get('/articles/latest', (req, res) => {
+    article.findLatest(function(list) {
+        res.send(list)
+    })
+})
+
+app.get('/updates/latest', (req, res) => {
+    update.findLatest(function(list) {
+        res.send(list)
     })
 })
 

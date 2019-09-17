@@ -22,3 +22,16 @@ exports.getLatestUpdates = function (done) {
             }
         })
 }
+
+exports.findLatest = function (done) {
+    Update.find({})
+      .sort({ createdAt: -1 })
+        .limit(4).exec(function (err, found) {
+            if (err) throw err
+            if (found) {
+                done(found)
+            } else {
+                done(404)
+            }
+        })
+}
