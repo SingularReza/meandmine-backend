@@ -92,9 +92,4 @@ app.get('/blog/list', (req, res) => {
     })
 })
 
-/*app.all('*', function(req, res) {
-  res.redirect("http://www.mysite.com/");
-});
-*/
-
 app.listen(port, () => console.log(`site running on port ${port}!`));
