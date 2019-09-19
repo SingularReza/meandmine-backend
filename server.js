@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
-//const cors = require('cors');
+const cors = require('cors');
 const article = require('./js/article.js');
 const update = require('./js/update.js');
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const multer = require('multer');
 const history = require('connect-history-api-fallback');
 const port = 3300;
@@ -21,11 +21,9 @@ var upload = multer({storage : storage}).any()
 
 const app = express();
 
-//configure cors in nginx
-
-//app.use(cors())
-//app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/', express.static(path.join(__dirname, 'dist')))
 app.use('/images', express.static(path.join(__dirname, 'images')))
