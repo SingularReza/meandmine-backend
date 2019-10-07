@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const article = require('./js/article.js');
 const update = require('./js/update.js');
+const mal = require('./js/api/mal-api.js');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const history = require('connect-history-api-fallback');
@@ -90,6 +91,12 @@ app.get('/blog/list', (req, res) => {
     article.getArticleList(function(list) {
         res.send(list)
     })
+})
+
+app.get('/api/fansubs/:showId', (req, res) => {
+    res.send(req.query.showId);
+    //var data = await mal.getFansubs(req.query.showId);
+    //console.log(data);
 })
 
 app.listen(port, () => console.log(`site running on port ${port}!`));
