@@ -12,14 +12,14 @@ const pool = mariadb.createPool({
     database: 'mal_fansubs'
 });
 
-async function fansubs(showId) {
+async function fansubs(showId, res) {
     let conn;
     try {
         conn = await pool.getConnection();
+        console.log("connection opened!")
         const rows = await conn.query("SELECT * from comments where showid = ?", [showId]);
-        const test = await conn.query("SELECT * from comments LIMIT 100");
-        console.log(test);
-        return rows;
+        res.send(rows);
+        console.log("connection done!")
     } catch (err) {
         throw err;
     } finally {

@@ -93,10 +93,8 @@ app.get('/blog/list', (req, res) => {
     })
 })
 
-app.get('/api/fansubs/:showId', (req, res) => {
-    res.send(req.query.showId);
-    //var data = await mal.getFansubs(req.query.showId);
-    //console.log(data);
+app.get('/api/fansubs/:showId', async (req, res) => {
+    mal.getFansubs(req.params.showId, res)
 })
 
 app.listen(port, () => console.log(`site running on port ${port}!`));
