@@ -26,15 +26,6 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use('/', express.static(path.join(__dirname, 'dist')))
-app.use('/images', express.static(path.join(__dirname, 'images')))
-
-app.use(history())
-
-// Should find out why i have to decalre the middleware the 2nd time
-app.use('/', express.static(path.join(__dirname, 'dist')))
-app.use('/images', express.static(path.join(__dirname, 'images')))
-
 app.get('/article/:id', (req, res) => {
     article.findArticle(req.params.id, function(content) {
         res.send(content)
@@ -93,8 +84,21 @@ app.get('/blog/list', (req, res) => {
     })
 })
 
-app.get('/api/fansubs/:showId', async (req, res) => {
-    mal.getFansubs(req.params.showId, res)
+app.get('/api/anime/:showId', async (req, res) => {
+    mal.getGroups(req.params.showId, res)
 })
+
+app.get('/api/comments/:showId/:groupId', async (req, res) => {
+    mal.getComments(req.params.showId, req.params.groupId, res)
+})
+
+app.use('/', express.static(path.join(__dirname, 'dist')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
+
+app.use(history())
+
+// Should find out why i have to decalre the middleware the 2nd time
+app.use('/', express.static(path.join(__dirname, 'dist')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
 
 app.listen(port, () => console.log(`site running on port ${port}!`));

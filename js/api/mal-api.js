@@ -12,14 +12,14 @@ const pool = mariadb.createPool({
     database: 'mal_fansubs'
 });
 
-async function fansubs(showId, res) {
+async function subgroups(showId, res) {
     let conn;
     try {
         conn = await pool.getConnection();
-        console.log("connection opened!")
-        const rows = await conn.query("SELECT * from comments where showid = ?", [showId]);
+        console.log("fangroup connection opened!")
+        const rows = await conn.query("SELECT groups.groupname, shows.approve_line, groups.language, groups.groupid from groups, shows WHERE showid = ? AND groups.groupid = shows.groupid", [showId]);
         res.send(rows);
-        console.log("connection done!")
+        console.log('fangroup connection done!')
     } catch (err) {
         throw err;
     } finally {
@@ -27,4 +27,20 @@ async function fansubs(showId, res) {
     }
 }
 
-exports.getFansubs = fansubs
+async function comments(showId, groupId, res) {
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        console.log("fansub connection opened!")
+        const rows = await conn.query("SELECT * from comments WHERE showid=? AND groupid=?", [showId, groupId])
+        res.send(rows);
+        console.log('fansub connection done!')
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn) return conn.end();
+    }
+}
+
+exports.getComments = comments
+exports.getGroups = subgroups
