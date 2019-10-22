@@ -17,7 +17,7 @@ async function subgroups(showId, res) {
     try {
         conn = await pool.getConnection();
         console.log("fangroup connection opened!")
-        const rows = await conn.query("SELECT groups.groupname, shows.approve_line, groups.language, groups.groupid from groups, shows WHERE showid = ? AND groups.groupid = shows.groupid", [showId]);
+        const rows = await conn.query("SELECT groups.groupname, shows.total_users, shows.approve, groups.language, groups.groupid from groups, shows WHERE showid = ? AND groups.groupid = shows.groupid", [showId]);
         res.send(rows);
         console.log('fangroup connection done!')
     } catch (err) {
@@ -32,7 +32,7 @@ async function comments(showId, groupId, res) {
     try {
         conn = await pool.getConnection();
         console.log("fansub connection opened!")
-        const rows = await conn.query("SELECT * from comments WHERE showid=? AND groupid=?", [showId, groupId])
+        const rows = await conn.query("SELECT comment, color from comments WHERE showid=? AND groupid=?", [showId, groupId])
         res.send(rows);
         console.log('fansub connection done!')
     } catch (err) {
