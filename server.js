@@ -84,11 +84,11 @@ app.get('/blog/list', (req, res) => {
     })
 })
 
-app.get('/api/anime/:showId', async (req, res) => {
+app.get('/api/fansubs/:showId', async (req, res) => {
     mal.getGroups(req.params.showId, res)
 })
 
-app.get('/api/comments/:showId/:groupId', async (req, res) => {
+app.get('/api/fansubs/:showId/:groupId', async (req, res) => {
     mal.getComments(req.params.showId, req.params.groupId, res)
 })
 
