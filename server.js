@@ -4,6 +4,7 @@ const cors = require('cors');
 const article = require('./js/article.js');
 const update = require('./js/update.js');
 const mal = require('./js/api/mal-api.js');
+const anilist = require('./js/api/anilist.js');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const history = require('connect-history-api-fallback');
@@ -90,6 +91,10 @@ app.get('/api/fansubs/:showId', async (req, res) => {
 
 app.get('/api/fansubs/:showId/:groupId', async (req, res) => {
     mal.getComments(req.params.showId, req.params.groupId, res)
+})
+
+app.get('/api/watching', (req, res) => {
+    anilist.getCurrentAnime(res)
 })
 
 app.use('/', express.static(path.join(__dirname, 'dist')))
