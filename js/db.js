@@ -32,11 +32,14 @@ var update = new Schema({
 
 var resource = new Schema({
     title: String,
-    link: String
+    link: String,
+    text: String
 })
 
 var Article = mongoose.model('article', article, 'articles')
 var Update = mongoose.model('updates', update)
+var Resource = mongoose.model('resources', resource)
 
 exports.article = Article
 exports.update = Update
+exports.resource = resource
